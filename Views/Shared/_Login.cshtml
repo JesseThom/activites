@@ -1,0 +1,15 @@
+@model Login
+
+<h1 class="display-4 text-center">Login</h1>
+<form class=" border shadow p-3 mb-5 bg-body-tertiary rounded p-5 mt-5" asp-controller="User" asp-action="Login" method="post">
+
+    <label class="mt-3" asp-for="EmailLogin"></label>
+    <input class="form-control" type="email" asp-for="EmailLogin">
+    <span class="d-block text-danger" asp-validation-for="EmailLogin"></span>
+
+    <label class="mt-3" asp-for="PasswordLogin"></label>
+    <input class="form-control" type="password" asp-for="PasswordLogin">
+    <span class="d-block text-danger" asp-validation-for="PasswordLogin"></span>
+
+    <button class="btn btn-success d-block mx-auto mt-3">Login</button>
+</form>

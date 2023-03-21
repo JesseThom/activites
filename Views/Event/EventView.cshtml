@@ -1,0 +1,60 @@
+@{
+    ViewData["Title"] = "Activity";
+}
+
+@model MyViewModel
+@if (Model.CurrentEvent.Creator?.UserId == Context.Session.GetInt32("uuid"))
+{
+    <form asp-controller="Event" asp-action="EventDelete" asp-route-id="@Model.CurrentEvent.EventId" method="post">
+        <td><button class="btn btn-danger">Delete</button></td>
+    </form>
+}
+else
+{
+    bool Joined = Model.CurrentEvent.EventParticipants.Any(p => p.UserId == Context.Session.GetInt32("uuid"));
+    if(!Joined)
+    {
+        <form asp-controller="Participant" asp-action="ParticipantCreate">
+            <input type="hidden" name="EventId" value="@Model.CurrentEvent.EventId">
+            <td><button class="btn btn-success">Join Event</button></td>
+            <td></td>
+        </form>
+    }
+    else
+    {
+        <form asp-controller="Participant" asp-action="ParticipantDelete">
+            <input type="hidden" name="EventId" value="@Model.CurrentEvent.EventId">
+            <td><button class="btn btn-success">Leave Event</button></td>
+            <td></td>
+        </form>
+    }
+}
+<h1>@Model.CurrentEvent.Title</h1>
+<h4>Event Coordinator: @Model.CurrentEvent.Creator?.FirstName</h4>
+<h4>Description:</h4>
+<p>@Model.CurrentEvent.Description</p>
+<h4>Participants:</h4>
+
+@foreach (Participant user in Model.CurrentEvent.EventParticipants)
+{
+    <p>@user.User?.FirstName @user.User.LastName</p>
+}
+
+    @* @if(Model.CurrentEvent.EventParticipants.Count()==0)
+    {
+        @if(Model.CurrentEvent.Creator?.UserId != Context.Session.GetInt32("uuid"))
+        {
+            <p>Be the First to join</p>
+        }
+        else
+            {
+                <p>No joins so far</p>
+            }
+    }
+        else
+        {
+            @foreach (Participant user in Model.CurrentEvent.EventParticipants)
+            {
+                <p>@user.User?.FirstName @user.User.LastName</p>
+            }
+        } *@

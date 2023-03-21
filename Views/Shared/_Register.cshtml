@@ -1,0 +1,27 @@
+@model User
+
+<h1 class="display-4 text-center">Register</h1>
+<form class=" border shadow p-3 mb-5 bg-body-tertiary rounded p-5 mt-5" asp-controller="User" asp-action="UserCreate" method="post">
+
+    <label asp-for="FirstName"></label>
+    <input class="form-control" type="text" asp-for="FirstName">
+    <span class="d-block text-danger" asp-validation-for="FirstName"></span>
+
+    <label class="mt-3" asp-for="LastName"></label>
+    <input class="form-control" type="text" asp-for="LastName">
+    <span class="d-block text-danger" asp-validation-for="LastName"></span>
+    
+    <label class="mt-3" asp-for="Email"></label>
+    <input class="form-control" type="email" asp-for="Email">
+    <span class="d-block text-danger" asp-validation-for="Email"></span>
+    
+    <label class="mt-3" asp-for="Password"></label>
+    <input class="form-control" type="password" asp-for="Password">
+    <span class="d-block text-danger" asp-validation-for="Password"></span>
+    
+    <label class="mt-3" asp-for="Confirm">Confirm Password</label>
+    <input class="form-control" type="password" asp-for="Confirm">
+    <span class="d-block text-danger" asp-validation-for="Confirm"></span>
+    
+    <button class="btn btn-success d-block mx-auto mt-3">Register</button>
+</form>

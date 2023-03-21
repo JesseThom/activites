@@ -1,0 +1,38 @@
+@{
+    ViewData["Title"] = "Create Avtivity";
+}
+
+@model Event
+<h3>Create an Activity</h3>
+<form class="w-75 mx-auto border p-5 mt-5" asp-controller="Event" asp-action="EventCreate" method="post">
+
+    <label asp-for="Title"></label>
+    <input class="form-control" type="text" asp-for="Title">
+    <span class="d-block text-danger" asp-validation-for="Title"></span>
+ 
+    <label asp-for="Date"></label>
+    <input class="form-control" type="date" asp-for="Date">
+    <span class="d-block text-danger" asp-validation-for="Date"></span>
+ 
+    <label asp-for="Time"></label>
+    <input class="form-control" type="time" asp-for="Time">
+    <span class="d-block text-danger" asp-validation-for="Time"></span>
+ 
+    <label asp-for="Duration"></label>
+    <input class="form-control" type="number" asp-for="Duration">
+    <span class="d-block text-danger" asp-validation-for="Duration"></span>
+ 
+    <label asp-for="DurationSet"></label>
+    <select class="form-select" asp-for="DurationSet">
+        <option value="min">min</option>
+        <option value="hrs">hrs</option>
+        <option value="days">days</option>
+    </select>
+    <span class="d-block text-danger" asp-validation-for="DurationSet"></span>
+ 
+    <label asp-for="Description"></label>
+    <textarea class="form-control" asp-for="Description" cols="3"></textarea>
+    <span class="d-block text-danger" asp-validation-for="Description"></span>
+ 
+    <button class="btn btn-success d-block mx-auto mt-3">Create</button>
+</form>

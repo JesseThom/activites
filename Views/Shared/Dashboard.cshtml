@@ -1,0 +1,53 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+@model MyViewModel
+
+<table class="table border">
+    <thead>
+        <th>Activity</th>
+        <th>Date and Time</th>
+        <th>Duration</th>
+        <th>Event Coordinator</th>
+        <th># of Participants</th>
+        <th>Actions</th>
+    </thead>
+    <tbody>
+        @foreach (Event e in Model.AllEvents)
+        {
+            <tr>
+                <td><a asp-controller="Event" asp-action="EventView" asp-route-id="@e.EventId">@e.Title</a></td>
+                <td>@String.Format("{0:MMM dd yyyy}",e.Date) @@ @String.Format("{0:t}",e.Time)</td>
+                <td>@e.Duration @e.DurationSet</td>
+                <td>@e.Creator.FirstName</td>
+                <td>@e.EventParticipants.Count()</td>
+                @if (e.Creator.UserId == Context.Session.GetInt32("uuid"))
+                {
+                    <form asp-controller="Event" asp-action="EventDelete" asp-route-id="@e.EventId" method="post">
+                        <td><button class="btn btn-danger">Delete</button></td>
+                    </form>
+                }
+                else
+                {
+                    bool Joined = e.EventParticipants.Any(p => p.UserId == Context.Session.GetInt32("uuid"));
+                    if(!Joined)
+                    {
+                        <form asp-controller="Participant" asp-action="ParticipantCreate">
+                            <input type="hidden" name="EventId" value="@e.EventId">
+                            <td><button class="btn btn-success">Join</button></td>
+                            <td></td>
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-controller="Participant" asp-action="ParticipantDelete">
+                            <input type="hidden" name="EventId" value="@e.EventId">
+                            <td><button class="btn btn-success">Leave</button></td>
+                            <td></td>
+                        </form>
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>
